@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+runtime/
+studio-data/
+pids/
+logs/
+node_modules/
+.DS_Store

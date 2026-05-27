@@ -1,0 +1,34 @@
+{
+  "id": "deepseek-v4-flash-spark",
+  "name": "DeepSeek-V4-Flash-Spark",
+  "backend": "vllm",
+  "model_path": "/home/sero/spark/models/hf-cache/models--0xSero--DeepSeek-V4-Flash-180B-codex-K160-REAP/snapshots/7c360e1cd4a5168099dbc54d16d929bf6df04990",
+  "served_model_name": "DeepSeek-V4-Flash-Spark",
+  "host": "100.83.190.2",
+  "port": 8000,
+  "tensor_parallel_size": 1,
+  "pipeline_parallel_size": 1,
+  "max_model_len": 200000,
+  "gpu_memory_utilization": 0.88,
+  "kv_cache_dtype": "fp8",
+  "max_num_seqs": 1,
+  "trust_remote_code": true,
+  "tool_call_parser": "deepseek_v4",
+  "reasoning_parser": "deepseek_v4",
+  "enable_auto_tool_choice": true,
+  "quantization": null,
+  "dtype": null,
+  "python_path": null,
+  "thinking_mode": "enabled",
+  "max_thinking_tokens": null,
+  "env_vars": {
+    "PROFILE": "k160-mtp2-200k",
+    "DEEPSEEK_THINKING": "true",
+    "MODEL_MODULE_DIR": "/home/sero/spark/deepseek-spark/runtime/deepseek-v4-flash-spark-200k"
+  },
+  "extra_args": {
+    "description": "DeepSeek-V4-Flash-Spark. K160 MTP2 200K single-DGX Spark profile with thinking/reasoning, tools, streaming, logs, and metrics configured.",
+    "docker_container": "studio-deepseek-v4-flash-spark-8000",
+    "launch_command": "/home/sero/spark/deepseek-spark/scripts/studio_model_entrypoint.sh --profile k160-mtp2-200k --host 100.83.190.2 --port 8000"
+  }
+}
