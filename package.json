@@ -9,6 +9,7 @@
     "setup:controller": "bash setup.sh controller",
     "setup:api": "bash setup.sh api k160",
     "setup:full": "bash setup.sh full k160",
+    "setup:pi-models": "bash setup.sh pi-models",
     "status": "bash setup.sh status",
     "stop": "bash setup.sh stop"
   },

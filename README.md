@@ -30,6 +30,7 @@ Default URLs:
 ./setup.sh api k144         # controller + DeepSeek-V4-Flash-Spark-Mini launched through Studio
 ./setup.sh frontend         # optional frontend only
 ./setup.sh full k160        # api mode plus frontend
+./setup.sh pi-models        # merge Spark models into ~/.pi/agent/models.json
 ./setup.sh status
 ./setup.sh stop
 ```
@@ -42,8 +43,8 @@ CONTROLLER_PORT=18080 INFERENCE_PORT=18000 FRONTEND_PORT=13000 ./setup.sh full k
 
 ## Preloaded Recipes
 
-- `DeepSeek-V4-Flash-Spark` -> `0xSero/DeepSeek-V4-Flash-180B-codex-K160-REAP`
-- `DeepSeek-V4-Flash-Spark-Mini` -> `0xSero/DeepSeek-V4-Flash-162B-codex-K144-REAP`
+- `DeepSeek-V4-Flash-Spark` -> `0xSero/DeepSeek-V4-Flash-180B`
+- `DeepSeek-V4-Flash-Spark-Mini` -> `0xSero/DeepSeek-V4-Flash-162B`
 
 Both recipes use:
 
@@ -58,6 +59,20 @@ K160 additionally enables MTP speculative decoding:
 
 ```text
 SPECULATIVE_CONFIG={"method":"deepseek_mtp","num_speculative_tokens":2}
+```
+
+## Pi Agent Config
+
+vLLM Studio's own agent runtime uses its app-local `studio-data/frontend/pi-agent` directory. It should not be pointed at the user's global `~/.pi/agent`.
+
+For users who already have `~/.pi`, `setup.sh controller`, `setup.sh api`, and `setup.sh full` also merge a `deepseek-spark` provider into `~/.pi/agent/models.json`. Existing providers and API keys are preserved, a timestamped backup is written before changes, and the file is kept at `0600`.
+
+Use these controls when needed:
+
+```bash
+UPDATE_PI_MODELS=0 ./setup.sh full k160      # skip global Pi config
+UPDATE_PI_MODELS=1 ./setup.sh pi-models      # create/update ~/.pi even if it is missing
+PI_MODELS_PROVIDER_ID=my-spark ./setup.sh pi-models
 ```
 
 ## Validation
@@ -89,6 +104,6 @@ The healthcheck verifies:
 
 - vLLM Studio: https://github.com/sybil-solutions/vllm-studio
 - Working Docker/model module: https://github.com/0xSero/deepseek-v4-flash-spark-200k
-- 162B model: https://hf.co/0xSero/DeepSeek-V4-Flash-162B-codex-K144-REAP
-- 180B model: https://hf.co/0xSero/DeepSeek-V4-Flash-180B-codex-K160-REAP
+- 162B model: https://hf.co/0xSero/DeepSeek-V4-Flash-162B
+- 180B model: https://hf.co/0xSero/DeepSeek-V4-Flash-180B
 - 213B model: https://huggingface.co/0xSero/DeepSeek-V4-Flash-213B/

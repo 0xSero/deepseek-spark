@@ -46,12 +46,14 @@ Usage:
   ./setup.sh api [k160|k144]         start controller, preload recipes, launch recipe through controller
   ./setup.sh frontend                start only the optional frontend for the configured controller
   ./setup.sh full [k160|k144]        api mode plus optional frontend
+  ./setup.sh pi-models               merge Spark models into ~/.pi/agent/models.json
   ./setup.sh status                  show service status
   ./setup.sh stop                    stop wrapper-launched services and model containers
 
 Useful overrides:
   CONTROLLER_PORT=18080 INFERENCE_PORT=18000 ./setup.sh api k160
   VLLM_STUDIO_DIR=/home/sero/spark/services/vllm-studio ./setup.sh controller
+  UPDATE_PI_MODELS=0 ./setup.sh full k160
 EOF
 }
 
@@ -138,6 +140,19 @@ load_env() {
   export VLLM_STUDIO_DISABLE_METRICS VLLM_STUDIO_LOG_RETENTION_DAYS VLLM_STUDIO_LOG_MAX_FILES
 }
 
+load_or_write_env() {
+  if [[ -f "$ENV_FILE" ]]; then
+    load_env
+  else
+    write_env
+    load_env
+  fi
+  CONTROLLER_HOST=${VLLM_STUDIO_HOST}
+  CONTROLLER_PORT=${VLLM_STUDIO_PORT}
+  INFERENCE_HOST=${VLLM_STUDIO_INFERENCE_HOST}
+  INFERENCE_PORT=${VLLM_STUDIO_INFERENCE_PORT}
+}
+
 pid_alive() {
   local file=$1
   [[ -f "$file" ]] && kill -0 "$(cat "$file")" >/dev/null 2>&1
@@ -153,6 +168,37 @@ listener_pid_for_port() {
 controller_status_ok() {
   curl -fsS -H "x-api-key: ${VLLM_STUDIO_API_KEY}" \
     "http://${CONTROLLER_HOST}:${CONTROLLER_PORT}/status" >/dev/null 2>&1
+}
+
+update_pi_models() {
+  load_env
+  CONTROLLER_HOST=${VLLM_STUDIO_HOST}
+  CONTROLLER_PORT=${VLLM_STUDIO_PORT}
+  local update_mode=${UPDATE_PI_MODELS:-auto}
+  local pi_root=${PI_ROOT:-$HOME/.pi}
+  case "$update_mode" in
+    0|false|FALSE|no|NO|off|OFF)
+      echo "Pi models update skipped (UPDATE_PI_MODELS=${update_mode})"
+      return 0
+      ;;
+    auto)
+      if [[ ! -d "$pi_root" ]]; then
+        echo "Pi models update skipped (no ${pi_root}; set UPDATE_PI_MODELS=1 to create it)"
+        return 0
+      fi
+      ;;
+    1|true|TRUE|yes|YES|on|ON|force|always)
+      ;;
+    *)
+      echo "unknown UPDATE_PI_MODELS=${update_mode}" >&2
+      return 2
+      ;;
+  esac
+  CONTROLLER_HOST="$CONTROLLER_HOST" \
+  CONTROLLER_PORT="$CONTROLLER_PORT" \
+  VLLM_STUDIO_API_KEY="$VLLM_STUDIO_API_KEY" \
+  PI_ROOT="$pi_root" \
+  node "${INSTALL_ROOT}/scripts/update_pi_models.mjs"
 }
 
 start_controller() {
@@ -201,6 +247,7 @@ start_controller() {
   INFERENCE_HOST="$INFERENCE_HOST" \
   INFERENCE_PORT="$INFERENCE_PORT" \
   "${INSTALL_ROOT}/scripts/preload_recipes.sh"
+  update_pi_models
   echo "controller ready: http://${CONTROLLER_HOST}:${CONTROLLER_PORT}"
 }
 
@@ -438,6 +485,11 @@ main() {
       sync_self
       write_env
       start_frontend
+      ;;
+    pi-models)
+      sync_self
+      load_or_write_env
+      update_pi_models
       ;;
     full)
       sync_self
