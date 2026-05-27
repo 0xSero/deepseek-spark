@@ -2,7 +2,7 @@
   "id": "deepseek-v4-flash-spark-mini",
   "name": "DeepSeek-V4-Flash-Spark-Mini",
   "backend": "vllm",
-  "model_path": "/home/sero/spark/models/hf-cache/models--0xSero--DeepSeek-V4-Flash-162B-codex-K144-REAP/snapshots/d663e8fb16809f6619000648b187b257249ed824",
+  "model_path": "/home/sero/spark/models/hf-cache/models--0xSero--DeepSeek-V4-Flash-162B/snapshots/d663e8fb16809f6619000648b187b257249ed824",
   "served_model_name": "DeepSeek-V4-Flash-Spark-Mini",
   "host": "100.83.190.2",
   "port": 8000,
