@@ -24,7 +24,7 @@
   "env_vars": {
     "PROFILE": "k144-nospec-200k",
     "DEEPSEEK_THINKING": "true",
-    "MODEL_MODULE_DIR": "/home/sero/spark/deepseek-spark/runtime/deepseek-v4-flash-spark-200k"
+    "MODEL_MODULE_DIR": "/home/sero/spark/deepseek-spark/runtime"
   },
   "extra_args": {
     "description": "DeepSeek-V4-Flash-Spark-Mini. K144 no-spec 200K single-DGX Spark profile with thinking/reasoning and tools configured.",

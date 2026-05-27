@@ -7,7 +7,7 @@ API_KEY=${VLLM_STUDIO_API_KEY:-${API_KEY:-}}
 INFERENCE_HOST=${INFERENCE_HOST:-100.83.190.2}
 INFERENCE_PORT=${INFERENCE_PORT:-8000}
 SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
-MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${SPARK_ROOT}/deepseek-spark/runtime/deepseek-v4-flash-spark-200k}
+MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${SPARK_ROOT}/deepseek-spark/runtime}
 
 if [[ -z "$API_KEY" ]]; then
   echo "set API_KEY or VLLM_STUDIO_API_KEY" >&2

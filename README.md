@@ -2,10 +2,12 @@
 
 Barebones 1x DGX Spark launcher for [vLLM Studio](https://github.com/sybil-solutions/vllm-studio) plus the validated DeepSeek V4 Flash 200K recipes.
 
-It stands beside two upstream pieces:
+The DeepSeek V4 Flash Spark runtime (configs, patcher, evidence, launch scripts) lives in [`runtime/`](runtime/). The controller/frontend comes from [vLLM Studio](https://github.com/sybil-solutions/vllm-studio).
 
-- Model/runtime module: https://github.com/0xSero/deepseek-v4-flash-spark-200k
-- Controller/frontend: https://github.com/sybil-solutions/vllm-studio
+Hugging Face models:
+
+- 180B / K160: https://huggingface.co/0xSero/DeepSeek-V4-Flash-180B
+- 162B / K144: https://huggingface.co/0xSero/DeepSeek-V4-Flash-162B
 
 ## One Command
 
@@ -103,7 +105,6 @@ The healthcheck verifies:
 ## Links
 
 - vLLM Studio: https://github.com/sybil-solutions/vllm-studio
-- Working Docker/model module: https://github.com/0xSero/deepseek-v4-flash-spark-200k
-- 162B model: https://hf.co/0xSero/DeepSeek-V4-Flash-162B
-- 180B model: https://hf.co/0xSero/DeepSeek-V4-Flash-180B
-- 213B model: https://huggingface.co/0xSero/DeepSeek-V4-Flash-213B/
+- Runtime details: [`runtime/README.md`](runtime/README.md)
+- 180B model: https://huggingface.co/0xSero/DeepSeek-V4-Flash-180B
+- 162B model: https://huggingface.co/0xSero/DeepSeek-V4-Flash-162B

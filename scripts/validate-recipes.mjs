@@ -44,7 +44,7 @@ for (const name of ["k144", "k160"]) {
   if (recipe.tool_call_parser !== "deepseek_v4") throw new Error(`${path} must use tool parser deepseek_v4`);
   if (recipe.reasoning_parser !== "deepseek_v4") throw new Error(`${path} must use reasoning parser deepseek_v4`);
   if (recipe.env_vars?.DEEPSEEK_THINKING !== "true") throw new Error(`${path} must enable DeepSeek thinking`);
-  if (!String(recipe.env_vars?.MODEL_MODULE_DIR ?? "").includes("/deepseek-spark/runtime/deepseek-v4-flash-spark-200k")) {
+  if (!String(recipe.env_vars?.MODEL_MODULE_DIR ?? "").includes("/deepseek-spark/runtime")) {
     throw new Error(`${path} must point at the wrapper-owned model module`);
   }
   if (!String(recipe.extra_args.docker_container ?? "").startsWith(target.containerPrefix)) {

@@ -15,8 +15,7 @@ VLLM_STUDIO_DIR=${VLLM_STUDIO_DIR:-${SPARK_ROOT}/services/vllm-studio}
 BUN_BIN=${BUN_BIN:-/home/sero/.bun/bin/bun}
 FRONTEND_NPM_INSTALL_FLAGS=${FRONTEND_NPM_INSTALL_FLAGS:---legacy-peer-deps}
 
-MODEL_MODULE_REPO=${MODEL_MODULE_REPO:-https://github.com/0xSero/deepseek-v4-flash-spark-200k.git}
-MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${INSTALL_ROOT}/runtime/deepseek-v4-flash-spark-200k}
+MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${INSTALL_ROOT}/runtime}
 
 CONTROLLER_HOST=${CONTROLLER_HOST:-$TAILSCALE_HOST}
 CONTROLLER_PORT=${CONTROLLER_PORT:-8080}
@@ -66,7 +65,7 @@ sync_self() {
   if [[ "$REPO_ROOT" != "$INSTALL_ROOT" ]]; then
     rsync -a --delete \
       --exclude .git \
-      --exclude runtime \
+      --exclude runtime/studio.env \
       --exclude studio-data \
       --exclude pids \
       --exclude logs \
@@ -76,10 +75,8 @@ sync_self() {
 
 ensure_model_module() {
   if [[ ! -x "${MODEL_MODULE_DIR}/install.sh" ]]; then
-    rm -rf "$MODEL_MODULE_DIR"
-    git clone "$MODEL_MODULE_REPO" "$MODEL_MODULE_DIR"
-  elif [[ "${MODEL_MODULE_UPDATE:-1}" == "1" && -d "${MODEL_MODULE_DIR}/.git" ]]; then
-    (cd "$MODEL_MODULE_DIR" && git pull --ff-only)
+    echo "missing runtime at ${MODEL_MODULE_DIR}" >&2
+    exit 1
   fi
 }
 

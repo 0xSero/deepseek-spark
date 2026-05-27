@@ -1,7 +1,7 @@
 .env
 .env.*
 !.env.example
-runtime/
+runtime/studio.env
 studio-data/
 pids/
 logs/
