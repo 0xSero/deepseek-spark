@@ -10,9 +10,10 @@ REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 INSTALL_ROOT=${INSTALL_ROOT:-${SPARK_ROOT}/deepseek-spark}
 
 VLLM_STUDIO_REPO=${VLLM_STUDIO_REPO:-https://github.com/sybil-solutions/vllm-studio.git}
-VLLM_STUDIO_REF=${VLLM_STUDIO_REF:-v1.40.0}
+VLLM_STUDIO_REF=${VLLM_STUDIO_REF:-main}
 VLLM_STUDIO_DIR=${VLLM_STUDIO_DIR:-${SPARK_ROOT}/services/vllm-studio}
 BUN_BIN=${BUN_BIN:-/home/sero/.bun/bin/bun}
+FRONTEND_NPM_INSTALL_FLAGS=${FRONTEND_NPM_INSTALL_FLAGS:---legacy-peer-deps}
 
 MODEL_MODULE_REPO=${MODEL_MODULE_REPO:-https://github.com/0xSero/deepseek-v4-flash-spark-200k.git}
 MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${INSTALL_ROOT}/runtime/deepseek-v4-flash-spark-200k}
@@ -224,7 +225,7 @@ start_frontend() {
   load_env
   prepare_frontend_settings
   if [[ ! -d "${VLLM_STUDIO_DIR}/frontend/node_modules" ]]; then
-    (cd "${VLLM_STUDIO_DIR}/frontend" && npm install)
+    (cd "${VLLM_STUDIO_DIR}/frontend" && npm install $FRONTEND_NPM_INSTALL_FLAGS)
   fi
   if [[ "${FORCE_FRONTEND_BUILD:-0}" == "1" || ! -d "${VLLM_STUDIO_DIR}/frontend/.next" ]]; then
     (cd "${VLLM_STUDIO_DIR}/frontend" && \
