@@ -83,8 +83,15 @@ ensure_model_module() {
 ensure_studio() {
   if [[ ! -f "${VLLM_STUDIO_DIR}/controller/src/main.ts" ]]; then
     rm -rf "$VLLM_STUDIO_DIR"
-    git clone --depth 1 --branch "$VLLM_STUDIO_REF" "$VLLM_STUDIO_REPO" "$VLLM_STUDIO_DIR"
+    git clone "$VLLM_STUDIO_REPO" "$VLLM_STUDIO_DIR"
   fi
+  (
+    cd "$VLLM_STUDIO_DIR"
+    git remote set-url origin "$VLLM_STUDIO_REPO"
+    git fetch origin "$VLLM_STUDIO_REF" --tags --prune
+    git checkout -B "$VLLM_STUDIO_REF" "origin/$VLLM_STUDIO_REF"
+    git reset --hard "origin/$VLLM_STUDIO_REF"
+  )
   if [[ ! -x "$BUN_BIN" ]]; then
     echo "missing Bun at $BUN_BIN" >&2
     echo "install Bun or set BUN_BIN=/path/to/bun" >&2

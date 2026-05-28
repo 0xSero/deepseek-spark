@@ -132,7 +132,11 @@ The launcher enables DeepSeek V4 tokenizer, reasoning parser, tool-call parser, 
 
 ## Docker runtime
 
-No public prebuilt Docker image is currently published. The installer uses the local validated image if present; otherwise it builds the native DGX Spark image locally from public sources.
+The runtime Docker image is published at:
+
+```text
+ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27
+```
 
 The image lineage is the DGX Spark DeepSeek V4 vLLM build `vllm-node-dsv4:latest` with vLLM `0.1.dev17016+g27fd665bd.d20260526` and `nvidia-cutlass-dsl[cu13]==4.5.1`. The final local tag is `vllm-node-dsv4-cutlass451:latest`.
 
@@ -143,7 +147,7 @@ vllm-node-dsv4-cutlass451:latest
 sha256:5df60ebb9c10dfb86d5946cae8244adfe65a7fd405401bd542ecf22d5c497a4a
 ```
 
-If you have published your own registry image, pass it explicitly with `IMAGE_REF=...`. The default path does not depend on a private or missing registry package.
+The installer pulls the published image automatically. Pass `IMAGE_REF=...` only when testing a different runtime image.
 
 The runtime patcher applies the nonstandard REAP expert-count router fallback, MXFP4 memory hygiene, optional cute-dsl override hook, and a FlashInfer CUDA IPC `libcudart` fix. It does not modify model weights.
 
@@ -182,7 +186,7 @@ Choose this if you value prefill throughput over decode speed, or if you want a 
 ## Links
 
 - One-command wrapper: https://github.com/0xSero/deepseek-spark
-- Runtime module (configs, patcher, evidence): https://github.com/0xSero/deepseek-v4-flash-spark-200k
+- Runtime module (configs, patcher, evidence): https://github.com/0xSero/deepseek-spark/tree/main/runtime
 - Base model: https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash
 - Larger single-Spark profile: https://huggingface.co/0xSero/DeepSeek-V4-Flash-180B
 

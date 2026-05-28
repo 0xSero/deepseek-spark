@@ -12,6 +12,19 @@ Default endpoints:
 - Controller: `http://100.83.190.2:8080`
 - Model API: `http://100.83.190.2:8000`
 
+Docker image:
+
+```text
+ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27
+manifest digest: sha256:e4462a915ba56026f9c7b5ed195180e07986983ac1aa26a8bb0160d7a031f396
+```
+
+vLLM Studio source:
+
+```text
+https://github.com/sybil-solutions/vllm-studio.git#main
+```
+
 Models:
 
 - `DeepSeek-V4-Flash-Spark`: `0xSero/DeepSeek-V4-Flash-180B`

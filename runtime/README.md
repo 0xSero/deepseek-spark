@@ -28,20 +28,24 @@ HF_TOKEN=... ./install.sh --profile k144-nospec-200k --launch
 
 ## Docker Image
 
-There is no public prebuilt Docker image at the moment. Do not try to pull `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27` unless you have published that package yourself.
+The runtime Docker image is published at:
+
+```text
+ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27
+```
 
 The installer uses this order:
 
 1. Use the local validated image `vllm-node-dsv4-cutlass451:latest` if it already exists.
-2. If `vllm-node-dsv4:latest` exists, build the Cutlass 4.5.1 derivative from it.
-3. On a fresh Spark, build `vllm-node-dsv4:latest` from public `eugr/spark-vllm-docker` PR 219 and `jasl/vllm:codex/ds4-sm120-min-enable`, then build the Cutlass derivative.
-4. If you published your own registry image, set `IMAGE_REF=...` explicitly.
+2. Pull `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27`.
+3. If the image is unavailable, build from public sources as a fallback.
 
 Validated local Docker image on `spark-2822`:
 
 ```text
 vllm-node-dsv4-cutlass451:latest
 sha256:5df60ebb9c10dfb86d5946cae8244adfe65a7fd405401bd542ecf22d5c497a4a
+ghcr manifest digest: sha256:e4462a915ba56026f9c7b5ed195180e07986983ac1aa26a8bb0160d7a031f396
 ```
 
 ## Default Working Profile
@@ -103,5 +107,5 @@ K144 MTP2 improved short decode but was not long-context safe at the tested 8G w
 - The working profiles capture CUDA graphs.
 - The image lineage is `vllm-node-dsv4:latest` / vLLM `0.1.dev17016+g27fd665bd.d20260526` plus `nvidia-cutlass-dsl[cu13]==4.5.1`.
 - The patcher applies the REAP nonstandard expert-count router fallback, MXFP4 memory hygiene, optional cute-dsl override hook, and FlashInfer CUDA IPC libcudart fix.
-- No public prebuilt Docker image is assumed. A fresh Spark builds locally; set `IMAGE_REF` only if you have published your own registry image.
+- The default Docker image is `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27`; set `IMAGE_REF` only to test a different runtime image.
 - Never commit `.env` files or tokens. Pass `HF_TOKEN` and `GITHUB_TOKEN` through the environment only.
