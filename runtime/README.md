@@ -26,26 +26,23 @@ HF_TOKEN=... ./install.sh --profile k144-nospec-200k --launch
 
 `HF_TOKEN` is only needed if the Hugging Face model is private or not already cached.
 
-For a fresh Spark, pull the Docker image first. The registry target is:
+## Docker Image
 
-```text
-ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27
-```
+There is no public prebuilt Docker image at the moment. Do not try to pull `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27` unless you have published that package yourself.
 
-If the GHCR image is unavailable, refresh a GitHub token with package scope and run:
+The installer uses this order:
 
-```bash
-./scripts/push_ghcr_image.sh
-```
+1. Use the local validated image `vllm-node-dsv4-cutlass451:latest` if it already exists.
+2. If `vllm-node-dsv4:latest` exists, build the Cutlass 4.5.1 derivative from it.
+3. On a fresh Spark, build `vllm-node-dsv4:latest` from public `eugr/spark-vllm-docker` PR 219 and `jasl/vllm:codex/ds4-sm120-min-enable`, then build the Cutlass derivative.
+4. If you published your own registry image, set `IMAGE_REF=...` explicitly.
 
-Current validated local Docker image on `spark-2822`:
+Validated local Docker image on `spark-2822`:
 
 ```text
 vllm-node-dsv4-cutlass451:latest
 sha256:5df60ebb9c10dfb86d5946cae8244adfe65a7fd405401bd542ecf22d5c497a4a
 ```
-
-Anonymous GHCR manifest access currently returns `denied` until package-scoped upload/publication is completed.
 
 ## Default Working Profile
 
@@ -106,5 +103,5 @@ K144 MTP2 improved short decode but was not long-context safe at the tested 8G w
 - The working profiles capture CUDA graphs.
 - The image lineage is `vllm-node-dsv4:latest` / vLLM `0.1.dev17016+g27fd665bd.d20260526` plus `nvidia-cutlass-dsl[cu13]==4.5.1`.
 - The patcher applies the REAP nonstandard expert-count router fallback, MXFP4 memory hygiene, optional cute-dsl override hook, and FlashInfer CUDA IPC libcudart fix.
-- The exact GHCR target is `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27`; if it is not available, the installer can use the already-cached `vllm-node-dsv4-cutlass451:latest` image or build from a local `vllm-node-dsv4:latest` base image.
+- No public prebuilt Docker image is assumed. A fresh Spark builds locally; set `IMAGE_REF` only if you have published your own registry image.
 - Never commit `.env` files or tokens. Pass `HF_TOKEN` and `GITHUB_TOKEN` through the environment only.

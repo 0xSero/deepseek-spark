@@ -17,6 +17,10 @@ Run on the DGX Spark. `HF_TOKEN` is only needed when the Hugging Face repos are 
 HF_TOKEN=... bash -lc 'set -euo pipefail; cd /home/sero/spark; rm -rf deepseek-spark; git clone https://github.com/0xSero/deepseek-spark.git; cd deepseek-spark; ./setup.sh full k160'
 ```
 
+No public prebuilt Docker image is required. The model module uses the validated
+local image when present; on a fresh Spark it builds the native DeepSeek V4 vLLM
+image from public sources before launching.
+
 Default URLs:
 
 - UI: `http://100.83.190.2:3000`

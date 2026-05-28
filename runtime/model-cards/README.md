@@ -9,4 +9,4 @@ Hugging Face model card READMEs for the validated DGX Spark DeepSeek V4 Flash pr
 
 Both are REAP-pruned derivatives of `deepseek-ai/DeepSeek-V4-Flash` built to run on a single DGX Spark / GB10 / SM121. They are experimental. Evaluate quality on your own tasks before production use.
 
-The full story of how these were built lives in the model cards above and the [deepseek-spark](https://github.com/0xSero/deepseek-spark) repo.
+The full story of how these were built lives in the model cards above and the [deepseek-spark](https://github.com/0xSero/deepseek-spark) repo. The cards document the local Docker build path instead of depending on a missing registry image.

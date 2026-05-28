@@ -132,13 +132,9 @@ The launcher enables DeepSeek V4 tokenizer, reasoning parser, tool-call parser, 
 
 ## Docker runtime
 
-Registry target:
+No public prebuilt Docker image is currently published. The installer uses the local validated image if present; otherwise it builds the native DGX Spark image locally from public sources.
 
-```text
-ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27
-```
-
-The image is the DGX Spark DeepSeek V4 vLLM build `vllm-node-dsv4:latest` with vLLM `0.1.dev17016+g27fd665bd.d20260526` and `nvidia-cutlass-dsl[cu13]==4.5.1`. The installer tags the pulled image as `vllm-node-dsv4-cutlass451:latest`.
+The image lineage is the DGX Spark DeepSeek V4 vLLM build `vllm-node-dsv4:latest` with vLLM `0.1.dev17016+g27fd665bd.d20260526` and `nvidia-cutlass-dsl[cu13]==4.5.1`. The final local tag is `vllm-node-dsv4-cutlass451:latest`.
 
 Exact image validated on `spark-2822`:
 
@@ -147,7 +143,7 @@ vllm-node-dsv4-cutlass451:latest
 sha256:5df60ebb9c10dfb86d5946cae8244adfe65a7fd405401bd542ecf22d5c497a4a
 ```
 
-If GHCR anonymous manifest access returns `denied`, the image has not been package-published yet. The installer falls back to the already-cached local image or builds from the local base.
+If you have published your own registry image, pass it explicitly with `IMAGE_REF=...`. The default path does not depend on a private or missing registry package.
 
 The runtime patcher applies the nonstandard REAP expert-count router fallback, MXFP4 memory hygiene, optional cute-dsl override hook, and a FlashInfer CUDA IPC `libcudart` fix. It does not modify model weights.
 
