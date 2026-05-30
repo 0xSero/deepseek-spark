@@ -28,10 +28,6 @@ branch of `sybil-solutions/vllm-studio` on every controller/API/full setup.
 
 Default URLs:
 
-- UI: `http://100.83.190.2:3000`
-- Controller: `http://100.83.190.2:8080`
-- Model API: `http://100.83.190.2:8000`
-
 ## Modes
 
 ```bash
@@ -93,8 +89,8 @@ After launch:
 ```bash
 source runtime/studio.env
 EXPECTED_MODEL=DeepSeek-V4-Flash-Spark \
-CONTROLLER_URL=http://100.83.190.2:8080 \
-INFERENCE_URL=http://100.83.190.2:8000 \
+CONTROLLER_URL=wherever \ (i recommend a tailscale ip)
+INFERENCE_URL=wherever \
 ./scripts/healthcheck.sh
 ```
 
