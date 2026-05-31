@@ -10,7 +10,7 @@ payload = {
     "model": "${MODEL}",
     "messages": [{"role": "user", "content": "Say exactly: REAP online."}],
     "temperature": 0,
-    "max_tokens": 16,
+    "max_tokens": 96,
 }
 req = urllib.request.Request(
     "${BASE_URL}/v1/chat/completions",
@@ -18,5 +18,15 @@ req = urllib.request.Request(
     headers={"Content-Type": "application/json"},
     method="POST",
 )
-print(urllib.request.urlopen(req, timeout=120).read().decode())
+response = json.loads(urllib.request.urlopen(req, timeout=120).read().decode())
+message = response["choices"][0]["message"]
+content = message.get("content")
+if content != "REAP online.":
+    raise SystemExit(f"unexpected content: {content!r}")
+print(json.dumps({
+    "model": response["model"],
+    "content": content,
+    "prompt_tokens": response["usage"]["prompt_tokens"],
+    "completion_tokens": response["usage"]["completion_tokens"],
+}))
 PY
