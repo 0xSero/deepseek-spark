@@ -4,7 +4,7 @@
   "private": false,
   "description": "Barebones DGX Spark wrapper for vLLM Studio + DeepSeek V4 Flash 162B/180B.",
   "scripts": {
-    "check": "bash -n setup.sh scripts/*.sh && node scripts/validate-recipes.mjs",
+    "check": "bash -n setup.sh scripts/*.sh runtime/scripts/*.sh && python3 -m py_compile runtime/scripts/*.py && node scripts/validate-recipes.mjs",
     "setup:model": "bash setup.sh model k160",
     "setup:controller": "bash setup.sh controller",
     "setup:api": "bash setup.sh api k160",

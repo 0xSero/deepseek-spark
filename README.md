@@ -68,6 +68,13 @@ K160 additionally enables MTP speculative decoding:
 SPECULATIVE_CONFIG={"method":"deepseek_mtp","num_speculative_tokens":2}
 ```
 
+## Split Spec Decode Foundation
+
+The RTX 3090/4080 draft-worker foundation is documented in
+[`runtime/split-spec-decode-foundation.md`](runtime/split-spec-decode-foundation.md).
+It keeps DGX Spark as the canonical long-context prefill/verifier and probes
+remote RTX workers before selecting the decode side.
+
 ## Pi Agent Config
 
 vLLM Studio's own agent runtime uses its app-local `studio-data/frontend/pi-agent` directory. It should not be pointed at the user's global `~/.pi/agent`.

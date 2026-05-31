@@ -109,3 +109,11 @@ K144 MTP2 improved short decode but was not long-context safe at the tested 8G w
 - The patcher applies the REAP nonstandard expert-count router fallback, MXFP4 memory hygiene, optional cute-dsl override hook, and FlashInfer CUDA IPC libcudart fix.
 - The default Docker image is `ghcr.io/0xsero/deepseek-v4-flash-spark-vllm:cutlass451-g27`; set `IMAGE_REF` only to test a different runtime image.
 - Never commit `.env` files or tokens. Pass `HF_TOKEN` and `GITHUB_TOKEN` through the environment only.
+
+## Split Spec Decode Foundation
+
+The first split-serving scaffold is in
+[`split-spec-decode-foundation.md`](split-spec-decode-foundation.md). It keeps
+Spark as the canonical long-context prefill/verifier and lets an RTX 3090 or RTX
+4080 host act as a measured draft/decode worker selected by
+`scripts/split_spec_probe.py`.
