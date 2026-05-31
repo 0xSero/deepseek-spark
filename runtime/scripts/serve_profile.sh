@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROFILE=${PROFILE:-k160-mtp2-200k}
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
+SPARK_ROOT=${SPARK_ROOT:-$HOME/spark}
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 CONFIG="${REPO_ROOT}/configs/${PROFILE}.env"
 

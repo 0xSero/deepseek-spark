@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROFILE=${PROFILE:-k160-mtp2-200k}
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
+SPARK_ROOT=${SPARK_ROOT:-$HOME/spark}
 MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${SPARK_ROOT}/deepseek-spark/runtime}
 HOST=${HOST:-100.83.190.2}
 PORT=${PORT:-8000}

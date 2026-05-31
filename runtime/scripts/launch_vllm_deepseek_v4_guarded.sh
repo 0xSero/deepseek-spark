@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SPARK_ROOT=${SPARK_ROOT:-$HOME/spark}
 MODEL_DIR=${MODEL_DIR:?Set MODEL_DIR to the DeepSeek V4 snapshot path on the Spark}
 PORT=${PORT:-8002}
 NAME=${NAME:-studio-deepseek-v4-flash-spark-${PORT}}
@@ -14,8 +15,8 @@ GPU_MEMORY_UTILIZATION=${GPU_MEMORY_UTILIZATION:-0.70}
 WATCHDOG_MIN_AVAILABLE_KB=${WATCHDOG_MIN_AVAILABLE_KB:-2097152}
 IMAGE=${IMAGE:-vllm-node-dsv4-cutlass451:latest}
 SERVED_MODEL_NAME=${SERVED_MODEL_NAME:-DeepSeek-V4-Flash-Spark}
-WATCHDOG_LOG=${WATCHDOG_LOG:-/home/sero/spark/logs/${NAME}.watchdog.log}
-PATCHER=${PATCHER:-/home/sero/spark/serve/patch_vllm_k160_native.py}
+WATCHDOG_LOG=${WATCHDOG_LOG:-${SPARK_ROOT}/logs/${NAME}.watchdog.log}
+PATCHER=${PATCHER:-${SPARK_ROOT}/serve/patch_vllm_k160_native.py}
 ENABLE_TOOLS=${ENABLE_TOOLS:-1}
 ENABLE_REASONING=${ENABLE_REASONING:-1}
 ENABLE_PREFIX_CACHING=${ENABLE_PREFIX_CACHING:-1}
@@ -49,7 +50,7 @@ mkdir -p "$(dirname "$WATCHDOG_LOG")"
     sleep 1
   done
 ) >> "$WATCHDOG_LOG" 2>&1 &
-echo $! > "/home/sero/spark/logs/${NAME}.watchdog.pid"
+echo $! > "${SPARK_ROOT}/logs/${NAME}.watchdog.pid"
 
 args=(
   vllm serve "$MODEL_DIR"
@@ -112,8 +113,8 @@ docker run -d \
   --network host \
   --ipc host \
   --ulimit memlock=-1 --ulimit stack=67108864 \
-  -v /home/sero/spark:/home/sero/spark \
-  -e HF_HOME=/home/sero/spark/models/hf-cache \
+  -v ${SPARK_ROOT}:${SPARK_ROOT} \
+  -e HF_HOME=${SPARK_ROOT}/models/hf-cache \
   -e VLLM_ALLOW_LONG_MAX_MODEL_LEN=1 \
   -e VLLM_TRITON_MLA_SPARSE=1 \
   -e VLLM_TRITON_MLA_SPARSE_ALLOW_CUDAGRAPH="${VLLM_TRITON_MLA_SPARSE_ALLOW_CUDAGRAPH:-1}" \
