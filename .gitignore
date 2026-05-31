@@ -2,8 +2,11 @@
 .env.*
 !.env.example
 runtime/studio.env
+runtime/configs/*.local.json
 studio-data/
 pids/
 logs/
 node_modules/
+__pycache__/
+*.pyc
 .DS_Store
