@@ -1,0 +1,16 @@
+{
+  "completion_tok_s_including_prefill": 1.7814746424524541,
+  "completion_tokens": 84,
+  "content": "SPARK-NEEDLE-32768-73F9",
+  "elapsed_s": 47.15194816602161,
+  "finish_reason": "stop",
+  "needle_depth": 0.72,
+  "observed_prompt_tokens": 32568,
+  "passed": true,
+  "prefill_tok_s_including_decode": 690.7031685165658,
+  "prompt_sha256": "bf5759d2e2c6629bae3079f884eaef45af1bb7db35e199d7a0a1e9161121d01d",
+  "response_id": "chatcmpl-8e06cefaa94ad4fe",
+  "secret": "SPARK-NEEDLE-32768-73F9",
+  "system_fingerprint": "vllm-0.1.dev17016+g27fd665bd.d20260526-84119abf",
+  "target_prompt_tokens": 32768
+}
