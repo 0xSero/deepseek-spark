@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "name": "spark-remote-draft-foundation",
+  "spark": {
+    "name": "dgx-spark",
+    "role": "canonical-prefill-verifier",
+    "base_url": "http://127.0.0.1:18000",
+    "model": "DeepSeek-V4-Flash-Spark",
+    "health_path": "/health",
+    "models_path": "/v1/models",
+    "notes": "Spark owns the long-context base model, prompt prefill, final token verification, and OpenAI-compatible serving surface."
+  },
+  "selection": {
+    "prefer": "measured_decode_tok_s",
+    "timeout_s": 3.0,
+    "require_ready": true,
+    "require_token_ids_for_acceptance": true
+  },
+  "probe": {
+    "run_decode_probe_by_default": false,
+    "path": "/v1/spec/probe",
+    "prompt": "Say exactly: split spec online.",
+    "max_tokens": 64,
+    "temperature": 0
+  },
+  "workers": [
+    {
+      "name": "rtx3090",
+      "role": "draft-decode-worker",
+      "enabled": false,
+      "gpu": "RTX 3090",
+      "memory_gb": 24,
+      "base_url": "http://rtx3090-host:8108",
+      "notes": "Enable after the worker stub or a real draft backend is reachable."
+    },
+    {
+      "name": "rtx4080",
+      "role": "draft-decode-worker",
+      "enabled": false,
+      "gpu": "RTX 4080",
+      "memory_gb": 16,
+      "base_url": "http://rtx4080-host:8108",
+      "notes": "Enable after the worker stub or a real draft backend is reachable."
+    }
+  ],
+  "protocol": {
+    "session_owner": "spark",
+    "worker_contract": "Remote workers draft candidate continuations. Spark accepts or rejects tokens against the canonical DeepSeek-V4-Flash-Spark model.",
+    "first_safe_transport": "prompt_tail_and_accepted_token_deltas",
+    "deferred_transport": "raw_kv_or_layer_state_transfer",
+    "deferred_reason": "KV/state transfer must be benchmarked before it is allowed into the hot path."
+  }
+}

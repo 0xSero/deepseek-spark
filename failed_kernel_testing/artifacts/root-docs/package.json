@@ -1,0 +1,24 @@
+{
+  "name": "deepseek-spark",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Barebones DGX Spark wrapper for vLLM Studio + DeepSeek V4 Flash 162B/180B.",
+  "scripts": {
+    "check": "bash -n setup.sh scripts/*.sh runtime/scripts/*.sh && python3 -m py_compile runtime/scripts/*.py && node scripts/validate-recipes.mjs",
+    "setup:model": "bash setup.sh model k160",
+    "setup:controller": "bash setup.sh controller",
+    "setup:api": "bash setup.sh api k160",
+    "setup:full": "bash setup.sh full k160",
+    "setup:pi-models": "bash setup.sh pi-models",
+    "status": "bash setup.sh status",
+    "stop": "bash setup.sh stop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xSero/deepseek-spark.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
