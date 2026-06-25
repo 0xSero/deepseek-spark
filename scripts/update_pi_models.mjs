@@ -7,7 +7,7 @@ const providerId = process.env.PI_MODELS_PROVIDER_ID || "deepseek-spark";
 const piRoot = process.env.PI_ROOT || join(homedir(), ".pi");
 const agentDir = process.env.PI_AGENT_DIR || join(piRoot, "agent");
 const modelsPath = process.env.PI_MODELS_PATH || join(agentDir, "models.json");
-const controllerHost = process.env.CONTROLLER_HOST || process.env.VLLM_STUDIO_HOST || "100.83.190.2";
+const controllerHost = process.env.CONTROLLER_HOST || process.env.VLLM_STUDIO_HOST || "0.0.0.0";
 const controllerPort = process.env.CONTROLLER_PORT || process.env.VLLM_STUDIO_PORT || "8080";
 const baseUrl = stripTrailingSlash(
   process.env.PI_MODELS_BASE_URL || `http://${controllerHost}:${controllerPort}/v1`,
