@@ -2,11 +2,11 @@
 set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-CONTROLLER_URL=${CONTROLLER_URL:-http://100.83.190.2:8080}
+CONTROLLER_URL=${CONTROLLER_URL:-http://0.0.0.0:8080}
 API_KEY=${VLLM_STUDIO_API_KEY:-${API_KEY:-}}
-INFERENCE_HOST=${INFERENCE_HOST:-100.83.190.2}
+INFERENCE_HOST=${INFERENCE_HOST:-0.0.0.0}
 INFERENCE_PORT=${INFERENCE_PORT:-8000}
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
+SPARK_ROOT=${SPARK_ROOT:-${HOME}/spark}
 MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${SPARK_ROOT}/deepseek-spark/runtime}
 
 if [[ -z "$API_KEY" ]]; then
@@ -28,7 +28,7 @@ recipe.env_vars = recipe.env_vars || {};
 recipe.env_vars.MODEL_MODULE_DIR = process.env.MODEL_MODULE_DIR;
 recipe.extra_args.launch_command = recipe.extra_args.launch_command
   .replace("/home/sero/spark", sparkRoot)
-  .replace("--host 100.83.190.2", `--host ${host}`)
+  .replace("--host 0.0.0.0", `--host ${host}`)
   .replace("--port 8000", `--port ${port}`);
 const containerBase = recipe.env_vars.PROFILE === "k144-nospec-200k"
   ? "studio-deepseek-v4-flash-spark-mini"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_URL=${BASE_URL:-http://100.83.190.2:8000}
+BASE_URL=${BASE_URL:-http://0.0.0.0:8000}
 MODEL=${MODEL:-DeepSeek-V4-Flash-Spark}
 
 python3 - <<PY

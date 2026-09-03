@@ -4,15 +4,15 @@ set -euo pipefail
 MODE=${1:-help}
 PROFILE_ARG=${2:-k160}
 
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
-TAILSCALE_HOST=${TAILSCALE_HOST:-100.83.190.2}
+SPARK_ROOT=${SPARK_ROOT:-${HOME}/spark}
+TAILSCALE_HOST=${TAILSCALE_HOST:-0.0.0.0}
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 INSTALL_ROOT=${INSTALL_ROOT:-${SPARK_ROOT}/deepseek-spark}
 
 VLLM_STUDIO_REPO=${VLLM_STUDIO_REPO:-https://github.com/sybil-solutions/vllm-studio.git}
 VLLM_STUDIO_REF=${VLLM_STUDIO_REF:-main}
 VLLM_STUDIO_DIR=${VLLM_STUDIO_DIR:-${SPARK_ROOT}/services/vllm-studio}
-BUN_BIN=${BUN_BIN:-/home/sero/.bun/bin/bun}
+BUN_BIN=${BUN_BIN:-$(command -v bun || echo "${HOME}/.bun/bin/bun")}
 FRONTEND_NPM_INSTALL_FLAGS=${FRONTEND_NPM_INSTALL_FLAGS:---legacy-peer-deps}
 
 MODEL_MODULE_DIR=${MODEL_MODULE_DIR:-${INSTALL_ROOT}/runtime}
@@ -51,7 +51,7 @@ Usage:
 
 Useful overrides:
   CONTROLLER_PORT=18080 INFERENCE_PORT=18000 ./setup.sh api k160
-  VLLM_STUDIO_DIR=/home/sero/spark/services/vllm-studio ./setup.sh controller
+  VLLM_STUDIO_DIR=${HOME}/spark/services/vllm-studio ./setup.sh controller
   UPDATE_PI_MODELS=0 ./setup.sh full k160
 EOF
 }

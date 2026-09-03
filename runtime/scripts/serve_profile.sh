@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROFILE=${PROFILE:-k160-mtp2-200k}
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
+SPARK_ROOT=${SPARK_ROOT:-${HOME}/spark}
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 CONFIG="${REPO_ROOT}/configs/${PROFILE}.env"
 
@@ -33,7 +33,7 @@ if [[ -z "${MODEL_DIR:-}" ]]; then
 fi
 IMAGE=${IMAGE:-vllm-node-dsv4-cutlass451:latest}
 PORT=${PORT:-8002}
-HOST=${HOST:-100.83.190.2}
+HOST=${HOST:-0.0.0.0}
 
 case "$PROFILE" in
   k144|k144-nospec-200k)

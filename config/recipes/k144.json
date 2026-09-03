@@ -4,7 +4,7 @@
   "backend": "vllm",
   "model_path": "/home/sero/spark/models/hf-cache/models--0xSero--DeepSeek-V4-Flash-162B/snapshots/d663e8fb16809f6619000648b187b257249ed824",
   "served_model_name": "DeepSeek-V4-Flash-Spark-Mini",
-  "host": "100.83.190.2",
+  "host": "0.0.0.0",
   "port": 8000,
   "tensor_parallel_size": 1,
   "pipeline_parallel_size": 1,
@@ -29,6 +29,6 @@
   "extra_args": {
     "description": "DeepSeek-V4-Flash-Spark-Mini. K144 no-spec 200K single-DGX Spark profile with thinking/reasoning and tools configured.",
     "docker_container": "studio-deepseek-v4-flash-spark-mini-8000",
-    "launch_command": "/home/sero/spark/deepseek-spark/scripts/studio_model_entrypoint.sh --profile k144-nospec-200k --host 100.83.190.2 --port 8000"
+    "launch_command": "/home/sero/spark/deepseek-spark/scripts/studio_model_entrypoint.sh --profile k144-nospec-200k --host 0.0.0.0 --port 8000"
   }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SPARK_ROOT=${SPARK_ROOT:-/home/sero/spark}
+SPARK_ROOT=${SPARK_ROOT:-${HOME}/spark}
 BUILD_ROOT=${BUILD_ROOT:-${SPARK_ROOT}/sources}
 SPARK_VLLM_REPO=${SPARK_VLLM_REPO:-https://github.com/eugr/spark-vllm-docker.git}
 SPARK_VLLM_PR=${SPARK_VLLM_PR:-219}
